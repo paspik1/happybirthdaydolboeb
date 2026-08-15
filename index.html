@@ -491,6 +491,38 @@ function openPhoto(src) {
 document.getElementById("photo-modal").onclick = function() {
     this.style.display = "none";
 };
+let lastOpenTime = 0;
+let quickCloseCount = 0;
+
+function openPhoto(src) {
+    const modal = document.getElementById("photo-modal");
+    const img = document.getElementById("modal-img");
+
+    img.src = src;
+    modal.style.display = "flex";
+
+    lastOpenTime = Date.now();
+}
+
+document.getElementById("photo-modal").onclick = function() {
+    this.style.display = "none";
+
+    const openDuration = Date.now() - lastOpenTime;
+
+    if (openDuration < 800) { // меньше секунды
+        quickCloseCount++;
+
+        if (quickCloseCount === 1) {
+            alert("Ты даже не посмотрел сын шлюхи… 😢");
+        } else if (quickCloseCount === 3) {
+            alert("Ну почему ты меня так быстро закрываешь урод? 😞");
+        } else if (quickCloseCount === 5) {
+            alert("Ладно… я обиделся!!!. 😡");
+        } else if (quickCloseCount > 7) {
+            alert("Я больше не буду открываться… шучу бро!!! 😭");
+        }
+    }
+};
 
 </script>
 
