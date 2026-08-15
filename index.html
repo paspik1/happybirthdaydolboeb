@@ -3,15 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Терминал</title>
+<title>PASPIK TERMINAL</title>
 
 <style>
-    body {
+    body.crt {
         margin: 0;
         background: black;
         color: #00ff6a;
         font-family: "Courier New", monospace;
-        overflow: hidden;
+        overflow-x: hidden;
+    }
+
+    /* CRT эффект */
+    body.crt::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+            to bottom,
+            rgba(0, 255, 100, 0.05),
+            rgba(0, 255, 100, 0.05) 2px,
+            transparent 2px,
+            transparent 4px
+        );
+        animation: crt-flicker 0.15s infinite;
+    }
+
+    @keyframes crt-flicker {
+        0% { opacity: 0.2; }
+        50% { opacity: 0.35; }
+        100% { opacity: 0.2; }
     }
 
     /* Матрица фон */
@@ -36,77 +61,182 @@
         text-shadow: 0 0 10px #00ff6a;
     }
 
-    input, button {
-        width: 100%;
-        padding: 12px;
-        font-size: 20px;
-        border-radius: 6px;
-        margin-top: 10px;
+    .glitch-text {
+        position: relative;
+        display: inline-block;
+        font-size: 18px;
+        color: #00ff6a;
+        text-shadow: 0 0 10px #00ff6a;
+        animation: glitch 1.2s infinite;
+    }
+
+    @keyframes glitch {
+        0% { transform: none; opacity: 1; }
+        20% { transform: translate(2px, -2px); opacity: 0.8; }
+        40% { transform: translate(-2px, 2px); opacity: 0.9; }
+        60% { transform: translate(1px, -1px); opacity: 0.7; }
+        80% { transform: translate(-1px, 1px); opacity: 0.9; }
+        100% { transform: none; opacity: 1; }
+    }
+
+    /* Глитч‑логотип PASPIK */
+    .paspik-glitch {
+        margin-top: 25px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        color: #00ff6a;
+        letter-spacing: 3px;
+        text-shadow: 
+            2px 2px #003300,
+            -2px -2px #00ff6a,
+            0 0 12px #00ff6a;
+        animation: glitch-logo 0.8s infinite;
+    }
+
+    @keyframes glitch-logo {
+        0% { transform: none; opacity: 1; }
+        20% { transform: translate(2px, -2px); opacity: 0.85; }
+        40% { transform: translate(-2px, 2px); opacity: 0.9; }
+        60% { transform: translate(1px, -1px); opacity: 0.75; }
+        80% { transform: translate(-1px, 1px); opacity: 0.9; }
+        100% { transform: none; opacity: 1; }
     }
 
     input {
+        width: 100%;
+        padding: 12px;
+        font-size: 20px;
         background: #000;
         border: 2px solid #00ff6a;
         color: #00ff6a;
+        border-radius: 6px;
+        animation: glitch-border 0.8s infinite;
+    }
+
+    @keyframes glitch-border {
+        0% { box-shadow: 0 0 5px #00ff6a; }
+        50% { box-shadow: 0 0 12px #00ff6a; }
+        100% { box-shadow: 0 0 5px #00ff6a; }
     }
 
     button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        font-size: 20px;
         background: #00ff6a;
         border: none;
+        border-radius: 6px;
         color: #000;
         font-weight: bold;
+        cursor: pointer;
     }
 
-    #hack {
+    #hack, #scan, #hints {
         margin-top: 25px;
         font-size: 18px;
         white-space: pre;
-        display: none;
     }
 
     #cat {
         margin-top: 20px;
         font-size: 20px;
-        display: none;
         text-align: center;
+        display: none;
+    }
+
+    /* Падающие сердечки */
+    #hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 24px;
+        color: #00ff6a;
+        animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+        from { transform: translateY(-50px); opacity: 1; }
+        to { transform: translateY(100vh); opacity: 0; }
+    }
+
+    /* Пульсирующее затемнение */
+    #darken {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 3;
+        transition: opacity 1s ease-in-out;
+    }
+
+    @keyframes pulse-dark {
+        0% { opacity: 0.45; }
+        50% { opacity: 0.65; }
+        100% { opacity: 0.45; }
+    }
+
+    .pulse-active {
+        animation: pulse-dark 1.2s infinite;
     }
 </style>
 </head>
-<body>
+
+<body class="crt">
+
+<div id="darken"></div>
 
 <canvas id="matrix"></canvas>
 
 <div class="terminal">
     <h1>
-    ПАРОЛЬ ОТ НОВОТРОИЦКОГО РЭСА<br>
-    <span style="font-size:18px; color:#00ff6a; text-shadow:0 0 10px #00ff6a;">
-        (от сердца Владислава Кузьменка ❤️)
-    </span>
-</h1>
+        ПАРОЛЬ ОТ НОВОТРОИЦКОГО РЭСА<br>
+        <span class="glitch-text">(от сердца Владислава Кузьменка ❤️)</span>
+    </h1>
+
+    <div class="paspik-glitch">PASP1K</div>
 
     <p>Введите пароль:</p>
     <input id="pass" type="text" placeholder="дд.мм.гггг">
     <button onclick="check()">ПОДТВЕРДИТЬ</button>
 
+    <div id="scan" style="display:none;"></div>
+    <div id="hints"></div>
     <div id="hack"></div>
     <div id="cat"></div>
 </div>
 
-<!-- Конфетти библиотека -->
+<div id="hearts"></div>
+
+<!-- YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<!-- Конфетти -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
-/* Матрица фон */
+/* Матрица */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const letters = "01";
 const fontSize = 16;
 const columns = canvas.width / fontSize;
-
 const drops = [];
 for (let i = 0; i < columns; i++) drops[i] = 1;
 
@@ -127,14 +257,85 @@ function drawMatrix() {
         drops[i]++;
     }
 }
-
 setInterval(drawMatrix, 40);
 
-/* Логика пароля */
+/* Падающие сердечки */
+function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💚";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.getElementById("hearts").appendChild(heart);
+    setTimeout(() => heart.remove(), 3000);
+}
+
+/* Подсказки */
+const hintsList = [
+    "Подсказка: дата может быть важнее, чем кажется...",
+    "Подсказка: иногда ключ — это день, который всё изменил.",
+    "Подсказка: попробуй вспомнить важный август...",
+    "Подсказка: цифры — это память.",
+    "Подсказка: 22... что это значит?"
+];
+
+let hintIndex = 0;
+setInterval(() => {
+    document.getElementById("hints").textContent = hintsList[hintIndex];
+    hintIndex = (hintIndex + 1) % hintsList.length;
+}, 4000);
+
+/* YouTube player */
+let player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('ytplayer', {
+        height: '0',
+        width: '0',
+        videoId: 'K_F74VX7X8s',
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            rel: 0,
+            modestbranding: 1
+        },
+        events: {
+            onReady: function(e) {
+                player.setVolume(100);
+            }
+        }
+    });
+}
+
+/* Сканирование пользователя */
+function scanUser() {
+    const scan = document.getElementById("scan");
+    scan.style.display = "block";
+
+    const lines = [
+        "ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...",
+        "СКАНИРОВАНИЕ ПОЛЬЗОВАТЕЛЯ...",
+        "ОБНАРУЖЕН: Владислав Кузьменко",
+        "АНАЛИЗ ДАННЫХ...",
+        "ОБНАРУЖЕНА ВАЖНАЯ ДАТА...",
+        "ПОДСКАЗКА: август...",
+        "ПОЛЬЗОВАТЕЛЬ ДОЛЖЕН ДОГАДАТЬСЯ."
+    ];
+
+    let i = 0;
+    const interval = setInterval(() => {
+        scan.textContent += lines[i] + "\n";
+        i++;
+        if (i >= lines.length) clearInterval(interval);
+    }, 600);
+}
+
+/* Проверка пароля */
 function check() {
     const p = document.getElementById("pass").value;
     const hack = document.getElementById("hack");
     const cat = document.getElementById("cat");
+
+    scanUser();
 
     if (p === "22.08.2009") {
         hack.style.display = "block";
@@ -148,12 +349,22 @@ function check() {
                 clearInterval(interval);
                 hack.textContent = "ДОСТУП ПОЛУЧЕН!\n";
 
-                // Конфетти взрыв
-                confetti({
-                    particleCount: 200,
-                    spread: 100,
-                    origin: { y: 0.6 }
-                });
+                // 🌑 Пульсирующее затемнение
+                const dark = document.getElementById("darken");
+                dark.style.opacity = "0.55";
+                dark.classList.add("pulse-active");
+
+                // 🔊 Песня
+                player.playVideo();
+                player.setVolume(100);
+
+                // 🎉 Конфетти
+                confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+
+                // 💚 Падающие сердечки
+                for (let h = 0; h < 15; h++) {
+                    setTimeout(spawnHeart, h * 200);
+                }
 
                 setTimeout(() => {
                     cat.style.display = "block";
@@ -174,11 +385,16 @@ function check() {
 
     } else {
         hack.style.display = "block";
-        hack.textContent = "Неверный пароль. Доступ запрещён.";
+        hack.textContent = "Неверный пароль. Подумай о важной дате...";
         cat.style.display = "none";
     }
 }
 </script>
+
+<!-- YouTube hidden player -->
+<div id="musicPlayer" style="display:none;">
+    <div id="ytplayer"></div>
+</div>
 
 </body>
 </html>
