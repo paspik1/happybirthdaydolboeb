@@ -407,6 +407,11 @@ function check() {
         document.getElementById("party").style.display = "block";
 
         document.getElementById("gallery").style.display = "block";
+        // включаем фон-картинку
+const bg = document.getElementById("party-bg");
+bg.style.backgroundImage = "url('https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/russia-moscow-cityscape-4k-rl.jpg')";
+bg.style.display = "block";
+
 
         confetti({ particleCount: 300, spread: 150 });
 
@@ -423,9 +428,9 @@ function check() {
         // надписи при неверном пароле
 const wrong = document.getElementById("wrong-text");
 const phrases = [
-    "ты что глупый?",
-    "Папа Моряк",
-    "Большие сиськи бабушки"
+    "ты че тупой?",
+    "Папа передает морской привет",
+    "Большие сиськи б*бушки"
 ];
 wrong.innerHTML = phrases[Math.floor(Math.random() * phrases.length)];
 wrong.style.display = "block";
