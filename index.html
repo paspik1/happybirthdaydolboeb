@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PASPIK TERMINAL</title>
 
-<!-- Новый шрифт PASPIK -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
 
 <style>
@@ -17,32 +16,7 @@
         overflow-x: hidden;
     }
 
-    /* CRT эффект */
-    body.crt::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        background: repeating-linear-gradient(
-            to bottom,
-            rgba(0, 255, 100, 0.05),
-            rgba(0, 255, 100, 0.05) 2px,
-            transparent 2px,
-            transparent 4px
-        );
-        animation: crt-flicker 0.15s infinite;
-    }
-
-    @keyframes crt-flicker {
-        0% { opacity: 0.2; }
-        50% { opacity: 0.35; }
-        100% { opacity: 0.2; }
-    }
-
-    /* Матрица фон */
+    /* Матрица */
     canvas {
         position: fixed;
         top: 0;
@@ -52,63 +26,7 @@
         z-index: -1;
     }
 
-    .terminal {
-        padding: 20px;
-        position: relative;
-        z-index: 10;
-    }
-
-    h1 {
-        text-align: center;
-        font-size: 24px;
-        text-shadow: 0 0 10px #00ff6a;
-    }
-
-    .glitch-text {
-        position: relative;
-        display: inline-block;
-        font-size: 18px;
-        color: #00ff6a;
-        text-shadow: 0 0 10px #00ff6a;
-        animation: glitch 1.2s infinite;
-    }
-
-    @keyframes glitch {
-        0% { transform: none; opacity: 1; }
-        20% { transform: translate(2px, -2px); opacity: 0.8; }
-        40% { transform: translate(-2px, 2px); opacity: 0.9; }
-        60% { transform: translate(1px, -1px); opacity: 0.7; }
-        80% { transform: translate(-1px, 1px); opacity: 0.9; }
-        100% { transform: none; opacity: 1; }
-    }
-
-    /* Глитч‑логотип PASPIK */
-    .paspik-glitch {
-        margin-top: 25px;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 900;
-        font-family: 'Orbitron', sans-serif;
-        color: #00ff6a;
-        letter-spacing: 4px;
-        text-shadow:
-            2px 2px #003300,
-            -2px -2px #00ff6a,
-            0 0 15px #00ff6a,
-            0 0 25px #00ff6a;
-        animation: glitch-logo 0.8s infinite;
-    }
-
-    @keyframes glitch-logo {
-        0% { transform: none; opacity: 1; }
-        20% { transform: translate(2px, -2px); opacity: 0.85; }
-        40% { transform: translate(-2px, 2px); opacity: 0.9; }
-        60% { transform: translate(1px, -1px); opacity: 0.75; }
-        80% { transform: translate(-1px, 1px); opacity: 0.9; }
-        100% { transform: none; opacity: 1; }
-    }
-
-    /* Красивое поле ввода */
+    /* Поле ввода */
     #pass {
         width: 100%;
         padding: 12px;
@@ -120,57 +38,39 @@
         outline: none;
         caret-color: #00ff6a;
         box-shadow: 0 0 12px #00ff6a;
-        animation: glitch-border 0.8s infinite;
-    }
-
-    @keyframes glitch-border {
-        0% { box-shadow: 0 0 8px #00ff6a; }
-        50% { box-shadow: 0 0 18px #00ff6a; }
-        100% { box-shadow: 0 0 8px #00ff6a; }
     }
 
     #pass:focus {
         box-shadow: 0 0 25px #00ff6a;
     }
 
-    #pass::placeholder {
-        color: transparent;
+    /* Праздничный режим */
+    .party-mode {
+        background: linear-gradient(135deg, #00ff6a, #00994a, #00ff6a);
+        animation: party-bg 6s infinite alternate;
+        color: white !important;
     }
 
-    /* Анимация загрузки */
-    #pass.loading::after {
-        content: "LOADING...";
-        position: absolute;
-        left: 12px;
-        top: 12px;
-        color: #00ff6a;
-        opacity: 0.7;
-        pointer-events: none;
-        animation: loading-glitch 1s infinite;
+    @keyframes party-bg {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
     }
 
-    @keyframes loading-glitch {
-        0% { content: "LOADING..."; opacity: 0.7; }
-        25% { content: "INITIALIZING..."; opacity: 0.5; }
-        50% { content: "CHECKING INPUT..."; opacity: 0.8; }
-        75% { content: "LOADING..."; opacity: 0.6; }
-        100% { content: "LOADING..."; opacity: 0.7; }
-    }
-
-    #hack, #scan, #hints {
-        margin-top: 25px;
-        font-size: 18px;
-        white-space: pre;
-    }
-
-    #cat {
-        margin-top: 20px;
-        font-size: 20px;
+    .party-title {
+        font-size: 60px;
         text-align: center;
-        display: none;
+        font-weight: 900;
+        color: #ffffff;
+        text-shadow: 0 0 25px #ffffff, 0 0 45px #00ff6a;
+        animation: party-title-glow 2s infinite alternate;
     }
 
-    /* Падающие сердечки */
+    @keyframes party-title-glow {
+        from { opacity: 0.7; }
+        to { opacity: 1; }
+    }
+
+    /* Сердечки */
     #hearts {
         position: fixed;
         top: 0;
@@ -193,7 +93,7 @@
         to { transform: translateY(100vh); opacity: 0; }
     }
 
-    /* Пульсирующее затемнение */
+    /* Вспышка */
     #darken {
         position: fixed;
         top: 0;
@@ -204,33 +104,7 @@
         opacity: 0;
         pointer-events: none;
         z-index: 3;
-        transition: opacity 1s ease-in-out;
-    }
-
-    @keyframes pulse-dark {
-        0% { opacity: 0.45; }
-        50% { opacity: 0.65; }
-        100% { opacity: 0.45; }
-    }
-
-    .pulse-active {
-        animation: pulse-dark 1.2s infinite;
-    }
-
-    /* Голограмма */
-    @keyframes holo {
-        0% {
-            opacity: 0;
-            transform: scale(0.8);
-            filter: blur(8px);
-            text-shadow: 0 0 5px #00ff6a;
-        }
-        100% {
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0);
-            text-shadow: 0 0 25px #00ff6a, 0 0 45px #00ff6a;
-        }
+        transition: opacity 0.3s ease-in-out;
     }
 </style>
 </head>
@@ -242,29 +116,22 @@
 <canvas id="matrix"></canvas>
 
 <div class="terminal">
-    <h1>
-        ПАРОЛЬ ОТ НОВОТРОИЦКОГО РЭСА<br>
-        <span class="glitch-text">(от сердца Владислава Кузьменка ❤️)</span>
-    </h1>
-
-    <div class="paspik-glitch">PASP1K</div>
-
-    <p>Введите пароль:</p>
-    <input id="pass" type="text" placeholder="">
+    <h1 style="text-align:center;">Введите пароль:</h1>
+    <input id="pass" type="text">
     <button onclick="check()">ПОДТВЕРДИТЬ</button>
 
-    <div id="scan" style="display:none;"></div>
+    <div id="scan"></div>
     <div id="hints"></div>
     <div id="hack"></div>
-    <div id="cat"></div>
+</div>
+
+<div id="party" style="display:none;">
+    <h1 class="party-title">С ДНЁМ РОЖДЕНИЯ!!! 🎉💚</h1>
 </div>
 
 <div id="hearts"></div>
 
-<!-- YouTube API -->
 <script src="https://www.youtube.com/iframe_api"></script>
-
-<!-- Конфетти -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
@@ -299,7 +166,7 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 40);
 
-/* Падающие сердечки */
+/* Сердечки */
 function spawnHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -309,150 +176,65 @@ function spawnHeart() {
     setTimeout(() => heart.remove(), 3000);
 }
 
-/* Подсказки */
-const hintsList = [
-    "Подсказка: дата может быть важнее, чем кажется...",
-    "Подсказка: иногда ключ — это день, который всё изменил.",
-    "Подсказка: попробуй вспомнить важный август...",
-    "Подсказка: цифры — это память.",
-    "Подсказка: 22... что это значит?"
-];
-
-let hintIndex = 0;
-setInterval(() => {
-    document.getElementById("hints").textContent = hintsList[hintIndex];
-    hintIndex = (hintIndex + 1) % hintsList.length;
-}, 4000);
-
-/* YouTube player */
+/* YouTube */
 let player;
+let wrongPlayer;
 
 function onYouTubeIframeAPIReady() {
+
+    // Музыка правильного пароля
     player = new YT.Player('ytplayer', {
         height: '0',
         width: '0',
         videoId: 'K_F74VX7X8s',
-        playerVars: {
-            autoplay: 0,
-            controls: 0,
-            rel: 0,
-            modestbranding: 1
-        },
-        events: {
-            onReady: function(e) {
-                player.setVolume(100);
-            }
-        }
+        playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1 },
+        events: { onReady: e => player.setVolume(100) }
     });
-}
 
-/* Анимация загрузки */
-const passField = document.getElementById("pass");
-
-passField.addEventListener("focus", () => {
-    passField.classList.add("loading");
-});
-
-passField.addEventListener("input", () => {
-    passField.classList.remove("loading");
-});
-
-/* Сканирование пользователя */
-function scanUser() {
-    const scan = document.getElementById("scan");
-    scan.style.display = "block";
-
-    const lines = [
-        "ИНИЦИАЛИЗАЦИЯ СИСТЕМЫ...",
-        "СКАНИРОВАНИЕ ПОЛЬЗОВАТЕЛЯ...",
-        "ОБНАРУЖЕН: Владислав Кузьменко",
-        "АНАЛИЗ ДАННЫХ...",
-        "ОБНАРУЖЕНА ВАЖНАЯ ДАТА...",
-        "ПОДСКАЗКА: август...",
-        "ПОЛЬЗОВАТЕЛЬ ДОЛЖЕН ДОГАДАТЬСЯ."
-    ];
-
-    let i = 0;
-    const interval = setInterval(() => {
-        scan.textContent += lines[i] + "\n";
-        i++;
-        if (i >= lines.length) clearInterval(interval);
-    }, 600);
+    // Музыка неверного пароля
+    wrongPlayer = new YT.Player('ytplayer_wrong', {
+        height: '0',
+        width: '0',
+        videoId: '6GY9kfXvr_c',
+        playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1 },
+        events: { onReady: e => wrongPlayer.setVolume(100) }
+    });
 }
 
 /* Проверка пароля */
 function check() {
     const p = document.getElementById("pass").value;
-    const hack = document.getElementById("hack");
-    const cat = document.getElementById("cat");
-
-    scanUser();
 
     if (p === "22.08.2009") {
-        hack.style.display = "block";
-        cat.style.display = "none";
 
-        // Скрываем подсказки
-        document.getElementById("hints").style.display = "none";
-        document.getElementById("scan").style.display = "none";
+        try { wrongPlayer.stopVideo(); } catch(e) {}
+        try { player.playVideo(); player.setVolume(100); } catch(e) {}
 
-        let i = 0;
-        const interval = setInterval(() => {
-            hack.textContent = "ВЗЛОМ СИСТЕМЫ: [" + "#".repeat(i) + " ".repeat(30 - i) + "]";
-            i++;
-            if (i > 30) {
-                clearInterval(interval);
-                hack.textContent = "ДОСТУП ПОЛУЧЕН!\n";
+        document.querySelector(".terminal").style.display = "none";
+        document.getElementById("matrix").style.display = "none";
 
-                // Пульсирующее затемнение
-                const dark = document.getElementById("darken");
-                dark.style.opacity = "0.55";
-                dark.classList.add("pulse-active");
+        document.body.classList.add("party-mode");
+        document.getElementById("party").style.display = "block";
 
-                // Музыка
-                player.playVideo();
-                player.setVolume(100);
+        confetti({ particleCount: 300, spread: 150 });
 
-                // Конфетти
-                confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-
-                // Сердечки
-                for (let h = 0; h < 15; h++) {
-                    setTimeout(spawnHeart, h * 200);
-                }
-
-                // Голограмма
-                setTimeout(() => {
-                    cat.style.display = "block";
-                    cat.innerHTML = `
-<p style="
-    color:#00ff6a;
-    font-size:42px;
-    text-align:center;
-    font-weight:900;
-    letter-spacing:4px;
-    opacity:0;
-    animation:holo 2s forwards;
-">
-С ДНЁМ РОЖДЕНИЯ
-</p>
-                    `;
-                }, 400);
-            }
-        }, 50);
+        for (let h = 0; h < 20; h++) {
+            setTimeout(spawnHeart, h * 150);
+        }
 
     } else {
-        hack.style.display = "block";
-        hack.textContent = "Неверный пароль. Подумай о важной дате...";
-        cat.style.display = "none";
+        try { player.stopVideo(); } catch(e) {}
+        try { wrongPlayer.playVideo(); wrongPlayer.setVolume(100); } catch(e) {}
+
+        const dark = document.getElementById("darken");
+        dark.style.opacity = "0.3";
+        setTimeout(() => dark.style.opacity = "0", 300);
     }
 }
 </script>
 
-<!-- YouTube hidden player -->
-<div id="musicPlayer" style="display:none;">
-    <div id="ytplayer"></div>
-</div>
+<div id="ytplayer"></div>
+<div id="ytplayer_wrong"></div>
 
 </body>
 </html>
