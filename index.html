@@ -16,7 +16,6 @@
         overflow-x: hidden;
     }
 
-    /* Матрица */
     canvas {
         position: fixed;
         top: 0;
@@ -26,7 +25,6 @@
         z-index: -1;
     }
 
-    /* Поле ввода */
     #pass {
         width: 100%;
         padding: 12px;
@@ -44,7 +42,6 @@
         box-shadow: 0 0 25px #00ff6a;
     }
 
-    /* Праздничный режим */
     .party-mode {
         background: linear-gradient(135deg, #00ff6a, #00994a, #00ff6a);
         animation: party-bg 6s infinite alternate;
@@ -70,7 +67,6 @@
         to { opacity: 1; }
     }
 
-    /* Сердечки */
     #hearts {
         position: fixed;
         top: 0;
@@ -93,7 +89,6 @@
         to { transform: translateY(100vh); opacity: 0; }
     }
 
-    /* Вспышка */
     #darken {
         position: fixed;
         top: 0;
@@ -117,16 +112,106 @@
 
 <div class="terminal">
     <h1 style="text-align:center;">Введите пароль:</h1>
+
+    <h2 style="text-align:center; color:#00ff6a; text-shadow:0 0 12px #00ff6a; margin-top:-10px;">
+        ПАРОЛЬ ОТ НОВОТРОИЦКОГО РЭСА
+    </h2>
+
+    <h3 style="text-align:center; color:#00ff6a; text-shadow:0 0 12px #00ff6a; margin-top:5px; font-family:'Orbitron', sans-serif;">
+        PASP1K
+    </h3>
+
+    <div id="hints" style="text-align:center; margin-top:10px; color:#00ff6a; font-size:18px;">
+        🔐 Подсказка: дата, которую он никогда не забудет<br>
+        🔐 Формат: ДД.ММ.ГГГГ
+    </div>
+
     <input id="pass" type="text">
     <button onclick="check()">ПОДТВЕРДИТЬ</button>
 
     <div id="scan"></div>
-    <div id="hints"></div>
     <div id="hack"></div>
 </div>
 
 <div id="party" style="display:none;">
     <h1 class="party-title">С ДНЁМ РОЖДЕНИЯ!!! 🎉💚</h1>
+</div>
+
+<!-- ГАЛЕРЕЯ -->
+<div id="gallery" style="display:none; margin-top:30px; text-align:center;">
+
+    <div style="margin-bottom:25px;">
+        <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_6_2026-08-15_13-26-30.jpg"
+             style="width:320px; border-radius:12px; box-shadow:0 0 25px #00ff6a;">
+        <div style="margin-top:10px; font-size:22px; color:#00ff6a; text-shadow:0 0 10px #00ff6a;">
+            ❤️ Самое главное фото ❤️
+        </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px;">
+
+        <!-- 12 фото -->
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_10_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 10 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_11_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 11 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_14_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 14 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_16_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 16 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_17_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 17 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_18_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 18 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_19_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 19 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_1_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 1 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_2_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 2 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_3_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 3 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_4_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 4 💚</div>
+        </div>
+
+        <div style="text-align:center;">
+            <img src="https://raw.githubusercontent.com/paspik1/happybirthdaydolboeb/main/img/photo_5_2026-08-15_13-26-30.jpg" style="width:140px; border-radius:10px; box-shadow:0 0 15px #00ff6a;">
+            <div style="margin-top:6px; color:#00ff6a;">💚 Фото 5 💚</div>
+        </div>
+
+    </div>
 </div>
 
 <div id="hearts"></div>
@@ -182,7 +267,6 @@ let wrongPlayer;
 
 function onYouTubeIframeAPIReady() {
 
-    // Музыка правильного пароля
     player = new YT.Player('ytplayer', {
         height: '0',
         width: '0',
@@ -191,7 +275,6 @@ function onYouTubeIframeAPIReady() {
         events: { onReady: e => player.setVolume(100) }
     });
 
-    // Музыка неверного пароля
     wrongPlayer = new YT.Player('ytplayer_wrong', {
         height: '0',
         width: '0',
@@ -215,6 +298,8 @@ function check() {
 
         document.body.classList.add("party-mode");
         document.getElementById("party").style.display = "block";
+
+        document.getElementById("gallery").style.display = "block";
 
         confetti({ particleCount: 300, spread: 150 });
 
