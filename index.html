@@ -101,6 +101,100 @@
         z-index: 3;
         transition: opacity 0.3s ease-in-out;
     }
+  /* Глитч-кнопка */
+#confirm-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 22px;
+    font-family: 'Orbitron', sans-serif;
+    background: #000;
+    color: #00ff6a;
+    border: 2px solid #00ff6a;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 0 0 8px #00ff6a;
+    box-shadow: 0 0 15px #00ff6a;
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s ease;
+}
+
+#confirm-btn:hover {
+    background: #00ff6a;
+    color: black;
+    box-shadow: 0 0 25px #00ff6a;
+    transform: scale(1.05);
+}
+
+    /* Вибрация кнопки при ошибке */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s ease;
+}
+
+/* Глитч-эффект */
+#confirm-btn::before,
+#confirm-btn::after {
+    content: "ПОДТВЕРДИТЬ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    color: #00ff6a;
+    text-shadow: -2px 0 red;
+    clip-path: inset(0 0 0 0);
+    animation: glitch 0.7s infinite;
+}
+
+#confirm-btn::after {
+    text-shadow: 2px 0 blue;
+    animation-delay: 0.3s;
+}
+
+@keyframes glitch {
+    0% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+    20% { clip-path: inset(10% 0 40% 0); transform: translate(-2px,2px); }
+    40% { clip-path: inset(40% 0 20% 0); transform: translate(2px,-2px); }
+    60% { clip-path: inset(20% 0 30% 0); transform: translate(-1px,1px); }
+    80% { clip-path: inset(30% 0 10% 0); transform: translate(1px,-1px); }
+    100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+}
+
+    /* Красивая неоновая кнопка */
+#confirm-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 22px;
+    font-family: 'Orbitron', sans-serif;
+    background: #000;
+    color: #00ff6a;
+    border: 2px solid #00ff6a;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 0 0 8px #00ff6a;
+    box-shadow: 0 0 15px #00ff6a;
+    transition: 0.25s ease;
+}
+
+#confirm-btn:hover {
+    background: #00ff6a;
+    color: black;
+    box-shadow: 0 0 25px #00ff6a;
+    transform: scale(1.05);
+}
+
     /* Увеличение фото при наведении */
 .gallery-photo {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -137,7 +231,11 @@
     </div>
 
     <input id="pass" type="text">
-    <button onclick="check()">ПОДТВЕРДИТЬ</button>
+    <button id="confirm-btn" onclick="check()">ПОДТВЕРДИТЬ</button>
+    <div id="wrong-text" style="display:none; text-align:center; margin-top:15px; color:#00ff6a; font-size:22px; text-shadow:0 0 12px #00ff6a;"></div>
+
+
+
 
     <div id="scan"></div>
     <div id="hack"></div>
@@ -316,13 +414,31 @@ function check() {
             setTimeout(spawnHeart, h * 150);
         }
 
-    } else {
-        try { player.stopVideo(); } catch(e) {}
-        try { wrongPlayer.playVideo(); wrongPlayer.setVolume(100); } catch(e) {}
+   } else {
+    try { player.stopVideo(); } catch(e) {}
 
-        const dark = document.getElementById("darken");
-        dark.style.opacity = "0.3";
-        setTimeout(() => dark.style.opacity = "0", 300);
+    setTimeout(() => {
+        try { wrongPlayer.playVideo(); wrongPlayer.setVolume(100); } catch(e) {}
+    }, 300);
+        // надписи при неверном пароле
+const wrong = document.getElementById("wrong-text");
+const phrases = [
+    "ты что глупый?",
+    "Папа Моряк",
+    "Большие сиськи бабушки"
+];
+wrong.innerHTML = phrases[Math.floor(Math.random() * phrases.length)];
+wrong.style.display = "block";
+
+
+    // вибрация кнопки при неверном пароле
+    const btn = document.getElementById("confirm-btn");
+    btn.classList.add("shake");
+    setTimeout(() => btn.classList.remove("shake"), 500);
+
+    const dark = document.getElementById("darken");
+    dark.style.opacity = "0.3";
+    setTimeout(() => dark.style.opacity = "0", 300);
     }
 }
 </script>
