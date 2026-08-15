@@ -10,7 +10,6 @@
 <style>
     body.crt {
         margin: 0;
-        background: black;
         color: #00ff6a;
         font-family: "Courier New", monospace;
         overflow-x: hidden;
@@ -47,6 +46,18 @@
         animation: party-bg 6s infinite alternate;
         color: white !important;
     }
+#party-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    display: none;
+}
 
     @keyframes party-bg {
         0% { filter: hue-rotate(0deg); }
@@ -210,7 +221,7 @@
 
 <body class="crt">
 
-<div id="darken"></div>
+<div id="party-bg"></div>
 
 <canvas id="matrix"></canvas>
 
@@ -403,7 +414,8 @@ function check() {
         document.querySelector(".terminal").style.display = "none";
         document.getElementById("matrix").style.display = "none";
 
-        document.body.classList.add("party-mode");
+       document.body.classList.remove("party-mode");
+
         document.getElementById("party").style.display = "block";
 
         document.getElementById("gallery").style.display = "block";
