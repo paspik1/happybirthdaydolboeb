@@ -543,6 +543,24 @@ document.getElementById("watch-video-btn").onclick = function() {
     // Открывает видео в новой вкладке
     window.open("https://www.yabuchka.net/videos/6425/krasivosisyuyu-jenushku-jestko-vyebli-za-neuplachennye-dolgi-ee-muja/");
 };
+let videoEnabled = false;
+
+document.getElementById("watch-video-btn").onclick = function() {
+    if (!videoEnabled) return; // кнопка не работает до пароля
+
+    window.open("https://www.youtube.com/watch?v=ТВОЕ_ВИДЕО", "_blank");
+};
+
+function checkPassword() {
+    const password = document.getElementById("password-input").value;
+
+    if (password === "ТВОЙ_ПАРОЛЬ") {
+        document.getElementById("gallery").style.display = "block";
+        document.getElementById("party").style.display = "block";
+
+        videoEnabled = true; // теперь кнопка работает
+    }
+}
 
 </script>
 
